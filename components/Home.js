@@ -1,11 +1,11 @@
 "use strict";
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const { useEffect, useContext } = React;
 
-  componentDidMount() {
+const Home = () => {
+  const { aboutMe, experience } = useContext(DataContext);
+
+  useEffect(() => {
     const timeline = gsap.timeline({ defaults: { ease: "power1.out" } });
 
     timeline.fromTo(
@@ -20,27 +20,18 @@ class Home extends React.Component {
     });
 
     timeline.fromTo(".summary", { opacity: 0 }, { opacity: 1, duration: 1 });
-    timeline.fromTo(
-      ".menu-item",
-      { opacity: 0 },
-      { opacity: 1, duration: 1, stagger: 0.25 },
-      "-=1"
-    );
-  }
+  }, []);
 
-  render() {
-    const { aboutMe, experience } = this.props;
-    return (
-      <div className="home-content">
-        <div className="summary">
-          <h1 className="primary-heading">{aboutMe.name}</h1>
-          <h2 className="secondary-heading">
-            {experience.designation} at {experience.name}
-          </h2>
-          <p className="aim">{aboutMe.aim}</p>
-        </div>
-        <div className="home-overlay"></div>
+  return (
+    <div className="home-content">
+      <div className="summary">
+        <h1 className="primary-heading">{aboutMe.name}</h1>
+        <h2 className="secondary-heading">
+          {experience[0].designation} at {experience[0].name}
+        </h2>
+        <p className="aim">{aboutMe.aim}</p>
       </div>
-    );
-  }
-}
+      <div className="home-overlay"></div>
+    </div>
+  );
+};

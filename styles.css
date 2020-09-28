@@ -10,6 +10,8 @@
   display: flex;
   flex-direction: column;
   gap: 100px;
+  overflow: hidden;
+  position: relative;
 }
 
 .menu-container {
@@ -33,6 +35,10 @@
   padding-right: 40px;
 }
 
+.menu-item > .active {
+  color: red;
+}
+
 .menu-link {
   text-decoration: none;
 }
@@ -41,6 +47,27 @@
   color: aliceblue;
   text-decoration: underline;
 }
+
+.next-page, .previous-page {
+  position: fixed;
+  top: 50%;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, .5);
+  color: white;
+  padding: 20px 30px;
+  font-size: 20px;
+}
+
+.next-page {
+    right: 2%;
+    transform: translateX(200%);
+}
+
+.previous-page {
+  transform: translateX(-200%);
+  left: 2%;
+}
+
 
 .home-content {
   height: 100vh;
@@ -52,6 +79,7 @@
 }
 
 .home-overlay,
+.experience-overlay,
 .education-overlay,
 .about-overlay {
   position: absolute;
@@ -67,12 +95,16 @@
   transform: translateX(-100%);
 }
 
-.education-overlay {
+.experience-overlay {
   transform: translateX(100%);
 }
 
+.education-overlay {
+  transform: translateX(-100%);
+}
+
 .about-overlay {
-  transform: translateY(100%);
+  transform: translateX(100%);
 }
 
 .summary {
@@ -102,6 +134,68 @@
 .aim {
   font-size: 22px;
   margin-top: 30px;
+}
+
+.experience-content {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background: url("./experience-background.jpg") no-repeat;
+  background-size: cover;
+  background-position-y: 70%;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.jobs {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.job {
+  z-index: 10;
+  padding: 20px 30px;
+  border-radius: 5%;
+  box-shadow: 5px 10px rgba(0, 0, 0, 0.5);
+  background-color: #08aeea;
+  background-image: linear-gradient(0deg, #08aeea 0%, #2af598 100%);
+  cursor: pointer;
+}
+
+.job-description {
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 50%;
+  height: 80%;
+  padding: 20px 30px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.job-description {
+  font-size: 1.25rem;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.job-description p {
+  margin: 10px 0px;
+}
+
+.job-description ul {
+  margin: 0px 50px;
+}
+
+.job-description a {
+  color: inherit;
+  font-weight: bolder;
+  text-decoration: none;
 }
 
 .education-content {
