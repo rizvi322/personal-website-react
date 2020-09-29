@@ -23,10 +23,6 @@ const Nav = () => {
     },
   ];
 
-  const location = useLocation();
-  let nextPageIndex = -1;
-  let previousPageIndex = -1;
-
   useEffect(() => {
     const timeline = gsap.timeline({ defaults: { ease: "power1.out" } });
 
@@ -35,19 +31,27 @@ const Nav = () => {
       { opacity: 0 },
       { opacity: 1, duration: 1, stagger: 0.25, delay: 3 }
     );
-    timeline.fromTo(
-      ".next-page",
-      { x: "200%" },
-      { x: "0%", duration: 1 },
-      "-=1"
-    );
-    timeline.fromTo(
-      ".previous-page",
-      { x: "-200%" },
-      { x: "0%", duration: 1 },
-      "-=1"
-    );
   }, [location]);
+
+  useEffect(() => {
+    const burger = document.querySelector(".burger");
+    const menu = document.querySelector(".menu-container");
+    const menuLinks = document.querySelectorAll(".menu-link");
+
+    burger.addEventListener("click", () => {
+      menu.classList.toggle("menu-active");
+      burger.classList.toggle("burger-active");
+    });
+
+    menuLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        menu.classList.remove("menu-active");
+        burger.classList.remove("burger-active");
+      });
+    });
+  }, []);
+
+  const location = useLocation();
 
   return (
     <React.Fragment>
@@ -59,8 +63,6 @@ const Nav = () => {
               .replace(" ", "-")}`;
             if (location.pathname === menuItem.path) {
               linkClass = `${linkClass} active`;
-              nextPageIndex = index + 1 >= menuItems.length ? -1 : index + 1;
-              previousPageIndex = index - 1;
             }
 
             return (
@@ -74,27 +76,11 @@ const Nav = () => {
         </ul>
       </nav>
 
-      {(() => {
-        if (nextPageIndex > -1) {
-          const nextItem = menuItems[nextPageIndex];
-          return (
-            <Link to={nextItem.path} className="next-page">
-              {`${nextItem.label} >>`}
-            </Link>
-          );
-        }
-      })()}
-
-      {(() => {
-        if (previousPageIndex > -1) {
-          const previousItem = menuItems[previousPageIndex];
-          return (
-            <Link to={previousItem.path} className="previous-page">
-              {`<< ${previousItem.label}`}
-            </Link>
-          );
-        }
-      })()}
+      <div className="burger">
+        <div className="line1"></div>
+        <div className="line2"></div>
+        <div className="line3"></div>
+      </div>
     </React.Fragment>
   );
 };

@@ -6,7 +6,9 @@ const Education = () => {
   const { education } = useContext(DataContext);
 
   useEffect(() => {
-    const timeline = gsap.timeline({ defaults: { ease: "power1.out" } });
+    const timeline = gsap.timeline({
+      defaults: { ease: "power1.out" },
+    });
 
     timeline.fromTo(
       ".education-content",
@@ -22,7 +24,7 @@ const Education = () => {
     timeline.fromTo(
       ".degree",
       { opacity: 0 },
-      { opacity: 1, duration: 1, stagger: 0.25 }
+      { opacity: 1, duration: 1, stagger: -0.25 }
     );
   });
 

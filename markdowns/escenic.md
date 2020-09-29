@@ -1,4 +1,4 @@
-The company was formerly known as **Escenic Asia Limited**. Here I started working as part of **Widget framework(WF)** team. **WF** is an add-on product for the Escenic Content Engine(ECE). Some of the significant features of WF that I have worked on are:
+StriboDX Asia Limited was formerly known as **Escenic Asia Limited**. Here I started working as part of **Widget framework(WF)** team. **WF** is an add-on product for the Escenic Content Engine(ECE). Some of the significant features of WF that I have worked on are:
 
 - **Build system** of the product. It involves Jenkins build and deployment scirpts, processing resources, merging several configuration layers creating final distribution, crating RCs etc.
 - **Core of the framework**. Woked on handling concurrent requests, request filter chain, **lazy loading**, **image processing**, image preloading, caching, context resolving, **REST** webservices etc.

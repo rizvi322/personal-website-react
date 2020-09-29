@@ -6,19 +6,43 @@ const mdConverter = new showdown.Converter();
 const Experience = () => {
   const { experience } = useContext(DataContext);
 
-  const loadJobDescription = async (job, container) => {
+  const loadJobDescription = async ({ job, shouldRender = true, event }) => {
+    const jobDescription = document.querySelector(".job-description");
+    const jdCloseButton = document.querySelector(".jd-close");
+    const jobDivs = document.querySelectorAll(".job");
+
     if (job.expFile) {
       const result = await fetch("../markdowns/" + job.expFile);
       const markdownText = await result.text();
 
       if (markdownText) {
-        container.innerHTML = mdConverter.makeHtml(markdownText);
+        jobDescription.innerHTML = mdConverter.makeHtml(markdownText);
       } else {
-        container.innerHTML = `<p>Not available.</p>`;
+        jobDescription.innerHTML = `<p>Not available.</p>`;
       }
     } else {
-      container.innerHTML = `<p>${job.responsibility}</p>`;
+      jobDescription.innerHTML = `<p>${job.responsibility}</p>`;
     }
+
+    jobDivs.forEach((jobDiv) => {
+      jobDiv.classList.remove("job-active");
+    });
+
+    if (event && event.target) {
+      event.target.classList.add("job-active");
+    } else {
+      jobDivs[0].classList.add("job-active");
+    }
+
+    if (shouldRender) {
+      jobDescription.classList.add("jd-active");
+      jdCloseButton.classList.add("jd-active");
+    }
+  };
+
+  const closeJobDescription = () => {
+    document.querySelector(".job-description").classList.remove("jd-active");
+    document.querySelector(".jd-close").classList.remove("jd-active");
   };
 
   useEffect(() => {
@@ -47,10 +71,7 @@ const Experience = () => {
       { opacity: 1, duration: 1 }
     );
 
-    loadJobDescription(
-      experience[0],
-      document.querySelector(".job-description")
-    );
+    loadJobDescription({ job: experience[0], shouldRender: false });
   });
 
   return (
@@ -59,12 +80,7 @@ const Experience = () => {
         {experience.map((job, index) => (
           <div
             className="job"
-            onClick={() =>
-              loadJobDescription(
-                job,
-                document.querySelector(".job-description")
-              )
-            }
+            onClick={(event) => loadJobDescription({ job, event })}
           >
             <h1>{job.name}</h1>
             <h2>{job.designation}</h2>
@@ -73,6 +89,11 @@ const Experience = () => {
         ))}
       </div>
       <div className="job-description"></div>
+      <div className="jd-close" onClick={() => closeJobDescription()}>
+        <div className="line1"></div>
+        <div className="line2"></div>
+        <div className="line3"></div>
+      </div>
       <div className="experience-overlay"></div>
     </div>
   );
